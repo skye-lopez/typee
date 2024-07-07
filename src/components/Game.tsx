@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
     Flex,
     Box,
@@ -18,11 +18,25 @@ export default function Game() {
         e.preventDefault();
         setUserText(() => e.target.value);
     }
+
+    useEffect(() => {
+        const userTextWords = userText.split(' ');
+        const gameTextWords = gameText.split(' ');
+        console.log(userTextWords);
+        console.log(gameTextWords);
+
+        if (userTextWords[0] === gameTextWords[0]) {
+            userTextWords.shift();
+            gameTextWords.shift();
+            setGameText(() => gameTextWords.join(' '));
+            setUserText(() => userTextWords.join(' '));
+        }
+    }, [userText]);
     return (
         <Flex justifyContent="center" alignItems="center">
             <Box bg={gameBg} w="90%" h="700px" maxWidth="1200px" borderRadius="10px" padding="25px">
             <Text fontSize='3xl' color={textColor}>{ gameText }</Text>
-            <Input placeholder="Type here" onChange={handleInput}/>
+            <Input placeholder="Type here" value={userText} onChange={handleInput}/>
             </Box>
         </Flex> 
     );
