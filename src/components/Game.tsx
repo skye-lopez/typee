@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import GameText from './GameText';
 import {
     Flex,
     Box,
@@ -10,9 +11,13 @@ import {
 export default function Game() {
     const gameBg = useColorModeValue("black", "white");
     const textColor = useColorModeValue("white", "black");
+    const inputBorder = useColorModeValue("white", "black")
     const [gameText, setGameText] = useState("Type: Start new game")
     const [userText, setUserText] = useState("");
     const [userQueue, setuserQueue] = useState([]);
+    const [wordCount, setWordCount] = useState(0);
+    const [pos, setPos] = useState(0);
+    const [textIsValid, setTextIsValid] = useState('null');
 
     function handleInput(e: any) {
         e.preventDefault();
@@ -20,23 +25,23 @@ export default function Game() {
     }
 
     useEffect(() => {
+        setPos(userText.length);
         const userTextWords = userText.split(' ');
         const gameTextWords = gameText.split(' ');
-        console.log(userTextWords);
-        console.log(gameTextWords);
-
-        if (userTextWords[0] === gameTextWords[0]) {
-            userTextWords.shift();
-            gameTextWords.shift();
-            setGameText(() => gameTextWords.join(' '));
-            setUserText(() => userTextWords.join(' '));
+        // A user can continue solving
+        if (userTextWords[wordCount] === gameTextWords[wordCount]) {
+            setWordCount((w) => w+1);
         }
     }, [userText]);
     return (
         <Flex justifyContent="center" alignItems="center">
             <Box bg={gameBg} w="90%" h="700px" maxWidth="1200px" borderRadius="10px" padding="25px">
-            <Text fontSize='3xl' color={textColor}>{ gameText }</Text>
-            <Input placeholder="Type here" value={userText} onChange={handleInput}/>
+                <Flex flexDirection="row">
+                    { gameText.split('').map((t, i) => <GameText num={i} char={t} pos={pos} userChar={userText[i]}/>)}
+                </Flex>
+                <Box marginTop="25px">
+                    <Input placeholder="Type here when game starts" value={userText} onChange={handleInput} color={textColor} borderColor={inputBorder} _placeholder={{ color: textColor }} bg="green"/>
+                </Box>
             </Box>
         </Flex> 
     );
