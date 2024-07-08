@@ -20,7 +20,7 @@ interface WordProps {
 
 export default function Word({ word, idx, selected, userWord, userIdx, cursorIdx, wordIdx } : WordProps) {
     const errorColor = useColorModeValue("black", "white");
-    const cursorColor = useColorModeValue("blue", "purple");
+    const cursorColor = useColorModeValue("violet", "orange");
     return (
         <Flex>
             {

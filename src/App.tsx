@@ -37,9 +37,9 @@ export const App = () => {
         </Box>
     </Flex>
     <Game />
-    <Flex alignItems="center" justifyContent="center">
+    <Flex alignItems="center" justifyContent="center" marginTop="20px">
         <Box>
-            <Text as="b">@skye-lopez</Text>
+            <Text as="b">Made by Aria Lopez</Text>
         </Box>
     </Flex>
   </ChakraProvider>

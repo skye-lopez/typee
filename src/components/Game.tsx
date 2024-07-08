@@ -38,18 +38,42 @@ export default function Game() {
         });
     }
 
-    const [gamePrompt, setGamePrompt] = useState(getNewPrompt())
+    function resetStats() {
+        setRunningWordCount(0);
+        setRunningCharCount(0);
+        setMistakes(0);
+        setWpm(0);
+        setTime(0);
+    }
+
+    const [gamePrompt, setGamePrompt] = useState("");
     const [words, setWords] = useState<string[]>([]);
     const [wordIdx, setWordIdx] = useState(0);
     const [userWord, setUserWord] = useState("");
     const [userIdx, setUserIdx] = useState(0);
     const [cursorIdx, setCursorIdx] = useState(1);
+    
+    // Stats
+    const [runningWordCount, setRunningWordCount] = useState(0);
+    const [runningCharCount, setRunningCharCount] = useState(0);
+    const [mistakes, setMistakes] = useState(0);
+    const [wpm, setWpm] = useState(0);
+    const [time, setTime] = useState(0);
 
     useEffect(() => {
-        if (gameState !== "select") {
-            // A new game is starting.
+        setGamePrompt(getNewPrompt());
+    }, []);
+
+
+    useEffect(() => {
+        let timerId: any;
+        if (gameState !== "select" && gameState !== "victory" && gameState !== "failed") {
             // TODO: Timer before game start (2s)
+            timerId = setInterval(() => setTime((old) => old + 1), 1000);
+        } else {
+            clearInterval(timerId);
         }
+        return () => { clearInterval(timerId); }
     }, [gameState]);
 
     useEffect(() => {
@@ -72,6 +96,11 @@ export default function Game() {
         setUserIdx(userWord.length-1);
         setCursorIdx(userWord.length);
         if (userWord === words[wordIdx]) {
+            // stats
+            setRunningWordCount((o) => o + 1);
+            setRunningCharCount((o) => o + words[wordIdx].length);
+
+            // Continue game
             setUserWord("");
             setWordIdx((o) => o + 1);
         }
@@ -89,7 +118,7 @@ export default function Game() {
     return (
         <Flex direction="column">
             <Flex>
-                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState}/>) : null }
+                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState} time={time} />) : null }
             </Flex>
             <Flex 
                 justifyContent="center" 

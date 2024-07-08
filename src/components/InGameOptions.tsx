@@ -10,22 +10,33 @@ import {
 
 interface InGameOptionsProps {
     setGameState: Function
+    time: number
 }
 
-export default function InGameOptions({ setGameState } : InGameOptionsProps) {
+export default function InGameOptions({ setGameState, time } : InGameOptionsProps) {
     const bg = useColorModeValue("orange", "#886bf2");
     return (
         <Flex 
             bg={bg} 
             width="100vw"
             padding="5px 10px"
+            justifyContent="space-between"
         >
-            <Button 
-                colorScheme="red"
-                onClick={() => setGameState("select")}
-            >
-                Exit Game
-            </Button>
+            <Stack direction="row" spacing={2}>
+                <Button 
+                    colorScheme="red"
+                    onClick={() => setGameState("select")}
+                >
+                    Exit Game
+                </Button>
+                <Button
+                    colorScheme="orange"
+                    onClick={() => {}}
+                >
+                    Restart Game
+                </Button>
+            </Stack>
+            <Text>{time}</Text>
         </Flex>
     );
 }
