@@ -29,7 +29,7 @@ export default function Game() {
                     />
                     <SelectionButton 
                         btnText={"Prompt"} 
-                        infoText={"See how quickly you can finish a short prompt."} 
+                        infoText={"See how quickly you can type a short prompt."} 
                     />
                     <SelectionButton 
                         btnText={"Survival"} 
