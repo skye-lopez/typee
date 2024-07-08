@@ -5,13 +5,25 @@ import {
   Spacer,
   Box,
   Text,
-  theme,
+  useColorModeValue,
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import Game from './components/Game';
 import { Logo } from "./Logo"
 
-export const App = () => (
+const theme = {
+    styles: {
+        golbal: (props: any) => ({
+            'html, body': {
+                color: props.colorMode === 'dark' ? 'whitesmoke' : 'black',
+                background: props.colorMode === 'dark' ? 'whitesmoke' : 'black'
+            }
+        })
+    }
+}
+
+export const App = () => {
+    return (
   <ChakraProvider theme={theme}>
     <Flex flexDirection='row' w="100%" h="100%" marginBottom="5">
         <Box padding="10px">
@@ -29,4 +41,5 @@ export const App = () => (
         </Box>
     </Flex>
   </ChakraProvider>
-)
+  );
+};
