@@ -20,9 +20,16 @@ export default function Game() {
         return data[Math.floor(Math.random() * data.length)];
     }
 
+    function handleInput(e: any) {
+        setUserWord(() => e.target.value);
+    }
+
     const [gamePrompt, setGamePrompt] = useState(getNewPrompt())
     const [words, setWords] = useState<string[]>([]);
-    const [wordIdx, setWordIdx] = useState(2);
+    const [wordIdx, setWordIdx] = useState(0);
+    const [userWord, setUserWord] = useState("");
+    const [userIdx, setUserIdx] = useState(0);
+
 
     useEffect(() => {
         if (gameState !== "select") {
@@ -46,6 +53,14 @@ export default function Game() {
         }
     }, [gameState]);
 
+    useEffect(() => {
+        setUserIdx(userWord.length-1);
+        if (userWord === words[wordIdx]) {
+            setUserWord("");
+            setWordIdx((o) => o + 1);
+        }
+    }, [userWord]);
+
     return (
         <Flex direction="column">
             <Flex>
@@ -61,10 +76,10 @@ export default function Game() {
                 gameState === 'select' ? (<GameSelection setGameState={setGameState} />) :
                 (<Flex flexDirection="column" maxWidth="75%">
                     <Flex flexDirection="row" flexWrap="wrap">
-                        { words?.map((w, idx) => (<Word word={w} idx={idx} selected={wordIdx === idx}/>))}
+                        { words?.map((w, idx) => (<Word word={w} idx={idx} selected={wordIdx === idx} userWord={userWord} userIdx={userIdx} />))}
                     </Flex>
                     <Flex marginTop="20px">
-                        <Input placeholder="..." border="1px"/>
+                        <Input placeholder="..." border="1px" value={userWord} onChange={handleInput}/>
                     </Flex>
                 </Flex>)
             }
