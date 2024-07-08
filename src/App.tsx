@@ -29,7 +29,7 @@ export const App = () => {
   <ChakraProvider theme={t}>
     <Flex flexDirection='row' w="100%" h="100%" marginBottom="0">
         <Box padding="10px">
-            <Text fontSize="2xl" as="b">typee</Text>
+            <Text fontSize="2xl" as="b">typee.xyz</Text>
         </Box>
         <Spacer />
         <Box padding="10px">

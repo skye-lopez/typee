@@ -16,7 +16,7 @@ export default function Game() {
     return (
         <Flex direction="column">
             <Flex>
-                { gameState !== 'select' ? (<InGameOptions />) : null }
+                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState}/>) : null }
             </Flex>
             <Flex 
                 justifyContent="center" 

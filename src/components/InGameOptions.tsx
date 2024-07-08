@@ -5,17 +5,27 @@ import {
     Input,
     useColorModeValue,
     Stack,
+    Button,
 } from "@chakra-ui/react"
 
-export default function InGameOptions() {
+interface InGameOptionsProps {
+    setGameState: Function
+}
+
+export default function InGameOptions({ setGameState } : InGameOptionsProps) {
     const bg = useColorModeValue("orange", "#886bf2");
     return (
         <Flex 
             bg={bg} 
             width="100vw"
-            padding="3px 10px"
+            padding="5px 10px"
         >
-            <Text>In Game Options</Text>
+            <Button 
+                colorScheme="red"
+                onClick={() => setGameState("select")}
+            >
+                Exit Game
+            </Button>
         </Flex>
     );
 }
