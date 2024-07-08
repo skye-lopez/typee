@@ -1,0 +1,16 @@
+import {
+    Flex,
+    Box,
+    Text,
+    Input,
+    useColorModeValue,
+    Stack,
+} from "@chakra-ui/react"
+
+export default function InGameOptions() {
+    return (
+        <Flex bg='red' width="inherit">
+            <Text>In Game Options</Text>
+        </Flex>
+    );
+}

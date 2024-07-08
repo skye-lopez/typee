@@ -8,19 +8,29 @@ import {
     Stack,
 } from "@chakra-ui/react"
 import GameSelection from "./GameSelection";
+import InGameOptions from "./InGameOptions";
 
 export default function Game() {
     const gameBgColor = useColorModeValue("white", "black");
-    const [gameState, setGameState] = useState("select");
+    const [gameState, setGameState] = useState("endless");
     return (
-        <Flex 
-            justifyContent="center" 
-            alignItems="center" 
-            minHeight="700px" 
-            bg={gameBgColor}
-            marginBottom="25px"
-        >
-            <GameSelection setGameState={setGameState} />
+        <Flex direction="column">
+            <Flex>
+                { gameState !== 'select' ? (<InGameOptions />) : null }
+            </Flex>
+            <Flex 
+                justifyContent="center" 
+                alignItems="center" 
+                minHeight="700px" 
+                bg={gameBgColor}
+            >
+            {
+                gameState === 'select' ? (<GameSelection setGameState={setGameState} />) :
+                (<Flex>
+                    <Text>We are in { gameState } </Text>
+                </Flex>)
+            }
+            </Flex>
         </Flex>
     );
 }
