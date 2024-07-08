@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react"
 import GameSelection from "./GameSelection";
 import InGameOptions from "./InGameOptions";
+import Word from './Word';
 import { data } from '../data.js'; 
 
 export default function Game() {
@@ -21,6 +22,7 @@ export default function Game() {
 
     const [gamePrompt, setGamePrompt] = useState(getNewPrompt())
     const [words, setWords] = useState<string[]>([]);
+    const [wordIdx, setWordIdx] = useState(2);
 
     useEffect(() => {
         if (gameState !== "select") {
@@ -57,8 +59,13 @@ export default function Game() {
             >
             {
                 gameState === 'select' ? (<GameSelection setGameState={setGameState} />) :
-                (<Flex maxWidth="75%">
-                    <Text as="b">{ words?.length > 0 ? words.join('') : null }</Text>
+                (<Flex flexDirection="column" maxWidth="75%">
+                    <Flex flexDirection="row" flexWrap="wrap">
+                        { words?.map((w, idx) => (<Word word={w} idx={idx} selected={wordIdx === idx}/>))}
+                    </Flex>
+                    <Flex marginTop="20px">
+                        <Input placeholder="..." border="1px"/>
+                    </Flex>
                 </Flex>)
             }
             </Flex>
