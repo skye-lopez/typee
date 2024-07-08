@@ -29,6 +29,7 @@ export default function Game() {
     const [wordIdx, setWordIdx] = useState(0);
     const [userWord, setUserWord] = useState("");
     const [userIdx, setUserIdx] = useState(0);
+    const [cursorIdx, setCursorIdx] = useState(1);
 
 
     useEffect(() => {
@@ -55,6 +56,7 @@ export default function Game() {
 
     useEffect(() => {
         setUserIdx(userWord.length-1);
+        setCursorIdx(userWord.length);
         if (userWord === words[wordIdx]) {
             setUserWord("");
             setWordIdx((o) => o + 1);
@@ -76,7 +78,7 @@ export default function Game() {
                 gameState === 'select' ? (<GameSelection setGameState={setGameState} />) :
                 (<Flex flexDirection="column" maxWidth="75%">
                     <Flex flexDirection="row" flexWrap="wrap">
-                        { words?.map((w, idx) => (<Word word={w} idx={idx} selected={wordIdx === idx} userWord={userWord} userIdx={userIdx} />))}
+                        { words?.map((w, idx) => (<Word word={w} idx={idx} selected={wordIdx === idx} userWord={userWord} userIdx={userIdx} cursorIdx={cursorIdx} />))}
                     </Flex>
                     <Flex marginTop="20px">
                         <Input placeholder="..." border="1px" value={userWord} onChange={handleInput}/>

@@ -13,21 +13,22 @@ interface WordProps {
     selected: boolean
     userWord: string
     userIdx: number
+    cursorIdx: number
 }
 
-export default function Word({ word, idx, selected, userWord, userIdx } : WordProps) {
+export default function Word({ word, idx, selected, userWord, userIdx, cursorIdx } : WordProps) {
     return (
         <Flex>
             {
                  selected && word === " " ?
-                 (<Flex minWidth="10px" bg={"red"}>{" "}</Flex>):
+                 (<Flex minWidth="10px" bg={"pink"}>{" "}</Flex>):
                   selected ?
                   word.split('').map((char, i) => 
                       <Text 
                           fontWeight="bold" 
                           textDecoration="underline" 
                           fontSize="3xl"
-                          color={i === userIdx ? 'red' : 'inherit'}
+                          color={i === cursorIdx ? 'pink' : char === userWord[i] ? 'green' : char !== userWord[i] && !!userWord[i] ? 'red' : 'inherit'}
                       >
                           {char}
                       </Text>) :
