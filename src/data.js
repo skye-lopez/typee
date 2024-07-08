@@ -1,5 +1,7 @@
 // Data for testing.
 export const data = [
-    "This is a typing prompt. It has some words and things within it. It isn't very hard to read either. and maybe we-can-add-some-hyphenessss.",
-    "The quick brown fox jumps over the hill to hunt the rabbit."
+    "The quick brown fox jumps over the hill to hunt the rabbit.",
+    "The cat jumped into the hat and was holding a bat.",
+    "The frog was sitting on a lilypad and decided to sleep.",
+    "The lion roared out after hunting its prey."
 ];
