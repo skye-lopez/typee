@@ -10,9 +10,10 @@ import {
 interface SelectionButtonProps {
     btnText: string
     infoText: string
+    update: Function
 }
 
-export default function SelectionButton({ btnText, infoText }: SelectionButtonProps) {
+export default function SelectionButton({ btnText, infoText, update }: SelectionButtonProps) {
     const bg = useColorModeValue("whitesmoke", "#262626");
     const { colorMode } = useColorMode();
     return (
@@ -23,6 +24,7 @@ export default function SelectionButton({ btnText, infoText }: SelectionButtonPr
             borderRadius="10px"
             cursor="pointer"
             _hover={{ bg: colorMode === 'dark' ? 'purple' : '#74f8fc' }}
+            onClick={() => update(btnText.toLowerCase())}
         >
             <Button 
                 marginRight="10px" 
