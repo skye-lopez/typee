@@ -1,8 +1,2 @@
 # typee
-Type trainer build with typescript, react, and chakra UI
-
-
-Ideas:
-- Completed words are set to a secondary color
-- Better colors overall for usability
-- Would like better error showing somehow.
+Simple type trainer website built with react/ts/chakra-ui.
