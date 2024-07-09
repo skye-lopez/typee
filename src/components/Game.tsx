@@ -61,6 +61,7 @@ export default function Game() {
     const [finalCharCount, setFinalCharCount] = useState(0);
     const [mistakes, setMistakes] = useState(0);
     const [wpm, setWpm] = useState(0);
+    const [runningWpm, setRunningWpm] = useState(0);
     const [time, setTime] = useState(0);
 
     useEffect(() => {
@@ -129,6 +130,10 @@ export default function Game() {
     }, [userWord]);
 
     useEffect(() => {
+        setRunningWpm(() => runningWordCount / (time / 60));
+    }, [runningWordCount]);
+
+    useEffect(() => {
         if (gameState === 'prompt' && wordIdx > words.length-1) {
             setGameState("victory");
             resetGame();
@@ -140,7 +145,7 @@ export default function Game() {
     return (
         <Flex direction="column">
             <Flex>
-                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState} time={time} resetGame={resetGame} />) : null }
+                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState} time={time} resetGame={resetGame} runningWpm={runningWpm} />) : null }
             </Flex>
             <Flex 
                 justifyContent="center" 

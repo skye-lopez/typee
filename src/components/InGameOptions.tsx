@@ -13,9 +13,10 @@ interface InGameOptionsProps {
     setGameState: Function
     resetGame: Function
     time: number
+    runningWpm: number
 }
 
-export default function InGameOptions({ setGameState, time, resetGame } : InGameOptionsProps) {
+export default function InGameOptions({ setGameState, time, resetGame, runningWpm } : InGameOptionsProps) {
     const bg = useColorModeValue("orange", "#886bf2");
     const [readableTime, setReadableTime] = useState("");
 
@@ -39,7 +40,10 @@ export default function InGameOptions({ setGameState, time, resetGame } : InGame
                     Exit Game
                 </Button>
             </Stack>
-            <Text fontSize="2xl">{readableTime}</Text>
+            <Stack direction="row" spacing={3}>
+                { isNaN(runningWpm) ? null : (<Text fontSize="xl">wpm: {Math.floor(runningWpm)}</Text>) }
+                <Text fontSize="xl">{readableTime}</Text>
+            </Stack>
         </Flex>
     );
 }
