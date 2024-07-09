@@ -85,6 +85,7 @@ export default function Game() {
                 setTime((old) => old+1);
             }, 1000);
         }
+
         return () => clearInterval(timerRef);
     }, [gameState]);
 
@@ -115,6 +116,15 @@ export default function Game() {
             // Continue game
             setUserWord("");
             setWordIdx((o) => o + 1);
+        }
+
+        // Survival
+        if (gameState === 'survival') {
+            for (let i = 0; i < userWord.length; i++) {
+                if (userWord[i] !== words[wordIdx][i]) {
+                    setGameState('victory');
+                }
+            }
         }
     }, [userWord]);
 
