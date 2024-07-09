@@ -10,10 +10,11 @@ import {
 
 interface InGameOptionsProps {
     setGameState: Function
+    resetGame: Function
     time: number
 }
 
-export default function InGameOptions({ setGameState, time } : InGameOptionsProps) {
+export default function InGameOptions({ setGameState, time, resetGame } : InGameOptionsProps) {
     const bg = useColorModeValue("orange", "#886bf2");
     return (
         <Flex 
@@ -25,13 +26,13 @@ export default function InGameOptions({ setGameState, time } : InGameOptionsProp
             <Stack direction="row" spacing={2}>
                 <Button 
                     colorScheme="red"
-                    onClick={() => setGameState("select")}
+                    onClick={() => { setGameState("select"); resetGame(); } }
                 >
                     Exit Game
                 </Button>
                 <Button
                     colorScheme="orange"
-                    onClick={() => {}}
+                    onClick={() => { resetGame(); }}
                 >
                     Restart Game
                 </Button>

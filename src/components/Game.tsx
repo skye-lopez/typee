@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react"
 import GameSelection from "./GameSelection";
 import InGameOptions from "./InGameOptions";
+import GameCompletion from "./GameCompletion";
 import Word from './Word';
 import { data } from '../data.js'; 
 
@@ -36,6 +37,7 @@ export default function Game() {
             const newPrompt = getNewPrompt()
             return newPrompt;
         });
+        setTime(0);
     }
 
     function resetStats() {
@@ -59,6 +61,7 @@ export default function Game() {
     const [mistakes, setMistakes] = useState(0);
     const [wpm, setWpm] = useState(0);
     const [time, setTime] = useState(0);
+    const [timerRef, setTimerRef] = useState<any>();
 
     useEffect(() => {
         setGamePrompt(getNewPrompt());
@@ -66,14 +69,22 @@ export default function Game() {
 
 
     useEffect(() => {
-        let timerId: any;
         if (gameState !== "select" && gameState !== "victory" && gameState !== "failed") {
             // TODO: Timer before game start (2s)
-            timerId = setInterval(() => setTime((old) => old + 1), 1000);
-        } else {
-            clearInterval(timerId);
+            const timerId = setInterval(() => setTime((old) => old + 1), 1000);
+            setTimerRef(timerId);
         }
-        return () => { clearInterval(timerId); }
+        else if (gameState === 'victory' || gameState === 'failed') {
+            // Calculate stats
+            setWpm(() => {
+                const mins = time / 60;
+                return runningWordCount / mins;
+            });
+            resetGame();
+        } else {
+            clearInterval(timerRef)
+        }
+        return () => { clearInterval(timerRef); }
     }, [gameState]);
 
     useEffect(() => {
@@ -117,8 +128,9 @@ export default function Game() {
 
     return (
         <Flex direction="column">
+            <Text>{ wpm }</Text>
             <Flex>
-                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState} time={time} />) : null }
+                { gameState !== 'select' ? (<InGameOptions setGameState={setGameState} time={time} resetGame={resetGame} />) : null }
             </Flex>
             <Flex 
                 justifyContent="center" 
@@ -128,7 +140,7 @@ export default function Game() {
             >
             {
                 gameState === 'select' ? (<GameSelection setGameState={setGameState} reset={resetGame} />) :
-                gameState === 'victory' ? (<Text>You won</Text>) : 
+                (gameState === 'victory' || gameState === 'defeat') ? (<GameCompletion gameState={gameState} setGameState={setGameState} />) : 
                 (<Flex flexDirection="column" maxWidth="75%">
                     <Flex flexDirection="row" flexWrap="wrap">
                         { words?.map((w, idx) => (<Word word={w} idx={idx} selected={wordIdx === idx} wordIdx={wordIdx} userWord={userWord} userIdx={userIdx} cursorIdx={cursorIdx} />))}
