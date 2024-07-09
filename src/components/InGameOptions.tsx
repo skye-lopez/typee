@@ -7,6 +7,7 @@ import {
     Stack,
     Button,
 } from "@chakra-ui/react"
+import { useState, useEffect} from "react";
 
 interface InGameOptionsProps {
     setGameState: Function
@@ -16,6 +17,13 @@ interface InGameOptionsProps {
 
 export default function InGameOptions({ setGameState, time, resetGame } : InGameOptionsProps) {
     const bg = useColorModeValue("orange", "#886bf2");
+    const [readableTime, setReadableTime] = useState("");
+
+    useEffect(() => {
+        const mins = Math.floor(time / 60);
+        const seconds = time % 60;
+        setReadableTime(`${mins}m ${seconds}s`);
+    }, [time])
     return (
         <Flex 
             bg={bg} 
@@ -30,14 +38,8 @@ export default function InGameOptions({ setGameState, time, resetGame } : InGame
                 >
                     Exit Game
                 </Button>
-                <Button
-                    colorScheme="orange"
-                    onClick={() => { resetGame(); }}
-                >
-                    Restart Game
-                </Button>
             </Stack>
-            <Text>{time}</Text>
+            <Text fontSize="2xl">{readableTime}</Text>
         </Flex>
     );
 }
