@@ -111,8 +111,10 @@ export default function Game() {
         setCursorIdx(userWord.length);
         if (userWord === words[wordIdx]) {
             // stats
-            setRunningWordCount((o) => o + 1);
-            setRunningCharCount((o) => o + words[wordIdx].length);
+            if (words[wordIdx] !== " ") {
+                setRunningWordCount((o) => o + 1);
+                setRunningCharCount((o) => o + words[wordIdx].length);
+            }
 
             // Continue game
             setUserWord("");

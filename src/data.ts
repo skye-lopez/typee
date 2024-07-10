@@ -1,3 +1,4 @@
+// src: https://www.raio.org/TKMFullText.pdf
 // Data for testing.
 const data: Array<string>  = [
     `When I was almost six and Jem was nearly ten, our summertime boundaries (within calling distance of Calpurnia) were Mrs. Henry Lafayette Dubose's house two doors to the north of us, and the Radley Place three doors to the south. We were never tempted to break them. The Radley Place was inhabited by an unknown entity the mere description of whom was enough to make us behave for days on end; Mrs. Dubose was plain hell.)`,
