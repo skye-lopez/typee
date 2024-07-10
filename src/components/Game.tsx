@@ -11,7 +11,7 @@ import GameSelection from "./GameSelection";
 import InGameOptions from "./InGameOptions";
 import GameCompletion from "./GameCompletion";
 import Word from './Word';
-import { data } from '../data.js'; 
+import data from '../data'; 
 
 export default function Game() {
     const gameBgColor = useColorModeValue("white", "black");
